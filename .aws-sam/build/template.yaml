@@ -1,11 +1,10 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  AppHelix_CoursePlatform
+Description: 'AppHelix_CoursePlatform
 
   Sample SAM Template for AppHelix_CoursePlatform
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+  '
 Globals:
   Function:
     Timeout: 10
@@ -14,14 +13,13 @@ Globals:
         DB_HOST: host.docker.internal
         DB_USER: postgres
         DB_PASS: root
-        DB_PORT: "5433"
+        DB_PORT: '5433'
         DB_NAME: apphelix_db
-
 Resources:
   DatabaseNameFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: server/
+      CodeUri: DatabaseNameFunction
       Handler: app.handler
       Runtime: nodejs18.x
       Events:
@@ -30,11 +28,12 @@ Resources:
           Properties:
             Path: /database
             Method: get
-
+    Metadata:
+      SamResourceId: DatabaseNameFunction
   StudentFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: server/
+      CodeUri: StudentFunction
       Handler: app.studentRouterHandler
       Runtime: nodejs18.x
       Events:
@@ -63,10 +62,12 @@ Resources:
           Properties:
             Path: /student/{id}
             Method: delete
+    Metadata:
+      SamResourceId: StudentFunction
   CourseFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: server/
+      CodeUri: CourseFunction
       Handler: app.courseRouterHandler
       Runtime: nodejs18.x
       Events:
@@ -95,7 +96,8 @@ Resources:
           Properties:
             Path: /course/{id}
             Method: delete
-
+    Metadata:
+      SamResourceId: CourseFunction
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
     Properties:
@@ -108,8 +110,9 @@ Resources:
     Properties:
       ResourceGroupName:
         Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: "true"
+      AutoConfigurationEnabled: 'true'
 Outputs:
   DatabaseApiEndpoint:
     Description: API Gateway endpoint URL for the /database route
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/database"
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/database
