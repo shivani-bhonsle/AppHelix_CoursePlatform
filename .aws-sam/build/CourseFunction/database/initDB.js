@@ -24,12 +24,13 @@ const createTables = async () => {
         course_id INTEGER REFERENCES courses(id) ON DELETE CASCADE,
         title VARCHAR(200),
         description TEXT
-            );
+        );
     `);
     await db.query(`CREATE TABLE IF NOT EXISTS enrollments (
         id SERIAL PRIMARY KEY,
         student_id INTEGER REFERENCES students(id) ON DELETE CASCADE,
         course_id INTEGER REFERENCES courses(id) ON DELETE CASCADE,
+        status VARCHAR(200),
         enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     `);

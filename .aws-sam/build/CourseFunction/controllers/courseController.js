@@ -31,7 +31,7 @@ const addCourse = async (event) => {
     client.query("COMMIT");
     return {
       statusCode: 200,
-      body: JSON.stringify({ rowsAffected: courseRes.rowCount }),
+      body: JSON.stringify({ message: "Course inserted successfully" }),
     };
   } catch (error) {
     client.query("ROLLBACK");
@@ -203,7 +203,7 @@ const updateCourse = async (event) => {
     client.query("COMMIT");
     return {
       statusCode: 200,
-      body: JSON.stringify({ rowsAffected: courseRes.rowCount }),
+      body: JSON.stringify({ message: "Course updated successfully" }),
     };
   } catch (error) {
     client.query("ROLLBACK");
@@ -238,7 +238,7 @@ const deleteCourse = async (event) => {
     client.query("COMMIT");
     return {
       statusCode: 200,
-      body: JSON.stringify({ rowsAffected: "Course Deleted successfully!" }),
+      body: JSON.stringify({ rowsAffected: "Course deleted successfully" }),
     };
   } catch (error) {
     client.query("ROLLBACK");

@@ -6,6 +6,11 @@ const {
   deleteCourse,
 } = require("./controllers/courseController");
 const {
+  enroll,
+  markCompletion,
+  listEnrollment,
+} = require("./controllers/enrollmentController");
+const {
   getStudents,
   registerStudent,
   getStudentById,
@@ -13,8 +18,10 @@ const {
   deleteStudent,
 } = require("./controllers/studentController");
 const db = require("./database/db");
+const createTables = require("./database/initDB");
 
 const handler = async (event) => {
+  createTables();
   try {
     const res = await db.query("SELECT current_database()");
     return {
@@ -74,4 +81,24 @@ const courseRouterHandler = (event) => {
   }
 };
 
-module.exports = { handler, studentRouterHandler, courseRouterHandler };
+const enrollmentRouterHandler = (event) => {
+  if (event.httpMethod === "POST" && event.path === "/enroll") {
+    return enroll(event);
+  } else if (event.httpMethod === "PUT" && event.path === "/completion") {
+    return markCompletion(event);
+  } else if (event.httpMethod === "GET" && event.resource === "/enroll") {
+    return listEnrollment(event);
+  } else {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ message: "Not Found" }),
+    };
+  }
+};
+
+module.exports = {
+  handler,
+  studentRouterHandler,
+  courseRouterHandler,
+  enrollmentRouterHandler,
+};

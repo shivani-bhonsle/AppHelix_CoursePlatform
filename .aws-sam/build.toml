@@ -7,6 +7,6 @@ architecture = "x86_64"
 handler = "app.handler"
 manifest_hash = "753d11d0e3d0d30dcbd554ef70d9287c"
 packagetype = "Zip"
-functions = ["DatabaseNameFunction", "StudentFunction", "CourseFunction"]
+functions = ["DatabaseNameFunction", "StudentFunction", "CourseFunction", "EnrollmentFunction"]
 
 [layer_build_definitions]

@@ -85,7 +85,7 @@ Resources:
           Properties:
             Path: /course/{id}
             Method: get
-        UpdateUpdateApi:
+        UpdateCourseApi:
           Type: Api
           Properties:
             Path: /course/{id}
@@ -95,6 +95,28 @@ Resources:
           Properties:
             Path: /course/{id}
             Method: delete
+  EnrollmentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: server/
+      Handler: app.enrollmentRouterHandler
+      Runtime: nodejs18.x
+      Events:
+        EnrollApi:
+          Type: Api
+          Properties:
+            Path: /enroll
+            Method: post
+        GetEnrollmentsApi:
+          Type: Api
+          Properties:
+            Path: /enroll
+            Method: get
+        MarkCompletionApi:
+          Type: Api
+          Properties:
+            Path: /completion
+            Method: put
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group

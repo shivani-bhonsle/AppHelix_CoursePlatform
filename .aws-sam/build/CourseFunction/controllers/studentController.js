@@ -8,7 +8,7 @@ const registerStudent = async (event) => {
     const res = await db.query(query, [student.name, student.email]);
     return {
       statusCode: 200,
-      body: JSON.stringify({ rowsAffected: res.rowCount }),
+      body: JSON.stringify({ message: "Student registered successfully" }),
     };
   } catch (error) {
     console.error("Error while resgistering a student", error);
@@ -64,7 +64,7 @@ const updateStudent = async (event) => {
     );
     return {
       statusCode: 200,
-      body: JSON.stringify({ rowsAffected: res.rowCount }),
+      body: JSON.stringify({ message: "Student updated successfully" }),
     };
   } catch (error) {
     console.error("Error while updating a student", error);
@@ -81,7 +81,7 @@ const deleteStudent = async (event) => {
     res = await db.query(`DELETE FROM students WHERE id = $1`, [id]);
     return {
       statusCode: 200,
-      body: JSON.stringify({ rowsAffected: res.rowCount }),
+      body: JSON.stringify({ message: "Student deleted successfully" }),
     };
   } catch (error) {
     console.error("Error while deleting a student", error);
@@ -97,5 +97,5 @@ module.exports = {
   getStudents,
   getStudentById,
   updateStudent,
-  deleteStudent
+  deleteStudent,
 };
